@@ -16,9 +16,11 @@ Features:
 *************************
 *************************
 How it works:
+
 Once the python script is run, it will read candidate words from the 12 input files and start generating batches of different permutations of the words supplied. It will rearrange the words based on the order constant set in the code. It will take each candidate seed phrase and do a checksum to weed out invalid seeds. If the seed is valid, then it continues to do the wallet derivation process where the output is a wallet address. It then check the wallet address derived against the target wallet address and writes that to the console allong with the matching seed. If that happens, you now have the seed for that target wallet.  
 
 Why did I make this?
+
 As part of a treasure hunt to recover a bitcoin wallet. Part of the puzzle involved 12 chapters each with hints to 1 of 12 seed words. The discovered chapter words would need to be arronged in a different order (which was another puzzle). The author didnt build in easy to very solutions so I had 8-10 words per chapter that could be the valid seed words. So, I wrote those try try all those options fast.
 
 **********************
@@ -30,6 +32,7 @@ To run all permutations in a reasonable time, you need to see how many possible 
 ***********************
 
 Prereqs:
+
 -Python 3 (I used 3.12.9 during the development of this.
 -BIP-utils Python library
 -itertools Python library
@@ -37,6 +40,7 @@ Prereqs:
 Ive run this on both Windows and Ubuntu Linux with no issues.
 
 Setup Instructions:
+
 1) Install Python
 2) Have a IDE or Text Editor that can read Python code nicely (Notepad++ is fine...)
 3) Once Python is installed, install the libraries using pip (or pip3):
@@ -60,5 +64,7 @@ Setup Instructions:
    given in the default lists.
 
 10) RUN IT. From a command line, browse to the folder with the files, and type: python bf-cpu.py
+
+Warning:
 
 Your CPU will be 100% consumed. As a precaution, monitor CPU temperatures to make sure your fans are cooling it properly. a properly cooled CPU should not get above 75 degrees celcius. 90 is the danger zone where you are definitly risking permanent damage to the CPU. Do not use this if your cooling is insufficient. I am not responsible for overheating machines. 
