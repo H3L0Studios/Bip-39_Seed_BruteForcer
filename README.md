@@ -14,6 +14,7 @@ Features:
 
 -tested against a know wallet and seed address successfully.
 *************************
+*************************
 How it works:
 Once the python script is run, it will read candidate words from the 12 input files and start generating batches of different permutations of the words supplied. It will rearrange the words based on the order constant set in the code. It will take each candidate seed phrase and do a checksum to weed out invalid seeds. If the seed is valid, then it continues to do the wallet derivation process where the output is a wallet address. It then check the wallet address derived against the target wallet address and writes that to the console allong with the matching seed. If that happens, you now have the seed for that target wallet.  
 
