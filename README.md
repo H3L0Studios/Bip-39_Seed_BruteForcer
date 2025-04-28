@@ -1,9 +1,9 @@
 # Bip-39_Seed_BruteForcer
 A simple Python script used to bruteforce BIP39 12 word recovery seeds.
-
+**********************
 If this helps you, please tip:
 Bitcoin: bc1qgq9rqlryrfcz7tvtehg6k7s354ah4rcn27akah
-
+**********************
 Features:
 -Uses all available CPU cores
 -Adjustable memory consumption
