@@ -6,8 +6,11 @@ Bitcoin: bc1qgq9rqlryrfcz7tvtehg6k7s354ah4rcn27akah
 **********************
 Features:
 -Uses all available CPU cores
+
 -Adjustable memory consumption
+
 -simple setup
+
 -tested against a know wallet and seed address successfully.
 
 How it works:
