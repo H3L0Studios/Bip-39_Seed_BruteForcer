@@ -19,8 +19,9 @@ INPUT_FILES = [f"input{i}.txt" for i in range(1, 13)]
 ORDER = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]  # Use this unless the word order was scrambled
 #ORDER = [12, 3, 10, 8, 6, 9, 11, 7, 2, 4, 1, 5]  # Example of a scrambled order
 
+MAX_ADDRESS_INDEX = 9  # Try index 0 through 9 (first 10 addresses)
+
 def chunk_generator(it, size):
-    """Yield fixed-size chunks from an iterator."""
     it = iter(it)
     while True:
         chunk = list(islice(it, size))
@@ -42,28 +43,30 @@ def is_valid_mnemonic(mnemonic: str) -> bool:
     except Exception:
         return False
 
-def derive_address(mnemonic: str) -> str:
+def derive_address(mnemonic: str, max_index: int = MAX_ADDRESS_INDEX) -> str:
     seed_bytes = Bip39SeedGenerator(mnemonic).Generate()
     bip84 = Bip84.FromSeed(seed_bytes, Bip84Coins.BITCOIN)
-    return bip84.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PublicKey().ToAddress()
+    acct = bip84.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT)
+
+    for i in range(max_index):
+        addr = acct.AddressIndex(i).PublicKey().ToAddress()
+        #print(f"address generated at index {i}: {addr}")
+        if addr == TARGET_ADDRESS:
+            print(f"[+] Match found at address index {i}")
+            return addr
+    return None
 
 def worker(combos_chunk, progress_queue, total_combos):
-    for idx, words in enumerate(combos_chunk):
+    for words in combos_chunk:
         mnemonic = " ".join(words)
         if not is_valid_mnemonic(mnemonic):
             continue
         address = derive_address(mnemonic)
-        #Below are debug Statements to turn on if you want to watch the seed and adress combos that get calculated. Not recommended for large loads.
-        #print(f"Mnemonic: {mnemonic}")
-        #print(f"Adress: {address}")
-        if address == TARGET_ADDRESS:
+        if address:
             print("\n[+] FOUND MATCH!")
             print(f"Mnemonic: {mnemonic}")
             return mnemonic
     return None
-
-def generate_combos(wordlists):
-    return list(itertools.product(*wordlists))
 
 def chunkify(data, num_chunks):
     chunk_size = max(1, len(data) // num_chunks)
